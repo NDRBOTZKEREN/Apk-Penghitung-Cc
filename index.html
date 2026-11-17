@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TuneMaster ID - Kelompok 8</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+    body { background-color: #0a0a0a; color: #e0e0e0; overflow-x: hidden; padding-bottom: 70px; }
+    
+    /* Header */
+    .header { background: #111; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 100; }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 800; color: #fff; }
+    .logo-icon { background: #e53935; width: 30px; height: 30px; border-radius: 8px; display: flex; justify-content: center; align-items: center; font-size: 16px; }
+    .logo span { color: #e53935; }
+    
+    .btn-top { background: #e53935; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+    
+    /* Tabs */
+    .tabs { display: flex; overflow-x: auto; background: #151515; border-bottom: 1px solid #222; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { padding: 15px 20px; font-size: 13px; font-weight: 600; color: #888; white-space: nowrap; cursor: pointer; border-bottom: 2px solid transparent; }
+    .tab.active { color: #fff; border-bottom-color: #e53935; background: #1a1a1a; }
+
+    /* Container */
+    .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+
+    /* Card Style */
+    .card { background: #141414; border: 1px solid #2a2a2a; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    .card-title { font-size: 14px; font-weight: 600; color: #aaa; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px; display: flex; justify-content: space-between; }
+    
+    /* Input & Slider */
+    .input-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .input-row label { font-size: 14px; color: #ddd; }
+    .input-box { background: #000; border: 1px solid #333; color: #fff; padding: 8px 12px; border-radius: 8px; width: 100px; text-align: right; font-size: 16px; font-weight: 600; }
+    input[type=range] { width: 100%; accent-color: #e53935; margin-bottom: 15px; }
+    
+    /* Silinder Selection */
+    .cyl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+    .cyl-btn { background: #1f1f1f; border: 1px solid #333; padding: 15px; border-radius: 10px; text-align: center; cursor: pointer; font-size: 13px; color: #aaa; }
+    .cyl-btn.active { background: rgba(229, 57, 53, 0.1); border-color: #e53935; color: #fff; }
+    .cyl-btn strong { display: block; font-size: 18px; margin-bottom: 5px; }
+
+    /* Hasil */
+    .result-card { background: linear-gradient(135deg, #1f1f1f, #141414); border: 1px solid #333; border-radius: 16px; padding: 25px; text-align: center; margin-bottom: 20px; }
+    .result-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .result-value { font-size: 50px; font-weight: 800; color: #fff; line-height: 1; }
+    .result-value span { font-size: 20px; color: #e53935; }
+    
+    .ratio-box { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 10px; padding: 15px; margin-top: 20px; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+    .ratio-title { font-size: 12px; color: #888; }
+    .ratio-val { font-size: 18px; font-weight: 800; color: #fff; }
+    
+    .engine-desc { background: #1a1a1a; padding: 15px; border-radius: 10px; margin-top: 10px; font-size: 13px; color: #aaa; line-height: 1.5; text-align: left; border-left: 3px solid #00bcd4; }
+    
+    .hitung-btn { background: #e53935; color: #fff; border: none; width: 100%; padding: 18px; border-radius: 12px; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; margin-top: 20px; box-shadow: 0 4px 15px rgba(229,57,53,0.3); }
+
+    /* Halaman Inspirasi */
+    .inspirasi-card { background: #141414; border: 1px solid #333; border-radius: 16px; padding: 20px; margin-bottom: 20px; }
+    .inspirasi-title { color: #e53935; font-weight: 800; font-size: 16px; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+    .inspirasi-text { font-size: 14px; color: #bbb; line-height: 1.6; margin-bottom: 15px; }
+    .inspirasi-text strong { color: #fff; }
+    
+    .berners-box { text-align: center; margin: 20px 0; padding: 20px; background: #1a1a1a; border-radius: 12px; border: 1px dashed #444; }
+    .berners-img { width: 120px; height: 120px; background: #222; border-radius: 50%; margin: 0 auto 15px; display: flex; justify-content: center; align-items: center; font-size: 40px; border: 3px solid #e53935; }
+    .berners-name { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 5px; }
+    .berners-sub { font-size: 13px; color: #e53935; }
+
+    /* Footer Nav */
+    .footer-nav { position: fixed; bottom: 0; width: 100%; background: #111; border-top: 1px solid #222; display: flex; justify-content: space-around; padding: 10px 0; font-size: 11px; color: #888; z-index: 100; }
+    .footer-nav div { text-align: center; cursor: pointer; padding: 5px; width: 100%; }
+    .footer-nav div.active { color: #e53935; font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">
+        <div class="logo-icon">⏱</div>
+        TuneMaster<span>ID</span>
+    </div>
+    <button class="btn-top">🔗 Salin Spek</button>
+</div>
+
+<div class="tabs">
+    <div class="tab active" id="tab-cc-btn">CC Silinder</div>
+    <div class="tab">Rasio Kompresi</div>
+    <div class="tab">Piston Speed</div>
+    <div class="tab">Venturi Karbu / TB</div>
+</div>
+
+<div class="container">
+    
+    <!-- ================= HALAMAN KALKULATOR ================= -->
+    <div id="page-kalkulator">
+        <h2 style="font-size: 20px; margin-bottom: 5px; color:#fff;">🔥 Kalkulator Kapasitas Mesin (CC)</h2>
+        <p style="font-size: 13px; color: #888; margin-bottom: 20px;">Hitung kapasitas silinder berdasarkan diameter piston dan langkah.</p>
+
+        <div class="card">
+            <div class="card-title">
+                Parameter Silinder
+                <span style="color: #e53935; cursor: pointer; font-size: 12px;" onclick="resetSpek()">↺ Reset Spek</span>
+            </div>
+            
+            <div class="input-row">
+                <label>Diameter Piston (Bore)</label>
+                <input type="number" id="boreInput" class="input-box" value="57" step="0.1" oninput="updateCalc()"> 
+            </div>
+            <input type="range" id="boreRange" min="40" max="100" step="0.1" value="57" oninput="syncInput('bore', this.value)">
+            
+            <div class="input-row">
+                <label>Langkah Piston (Stroke)</label>
+                <input type="number" id="strokeInput" class="input-box" value="58.7" step="0.1" oninput="updateCalc()">
+            </div>
+            <input type="range" id="strokeRange" min="40" max="100" step="0.1" value="58.7" oninput="syncInput('stroke', this.value)">
+
+            <label style="font-size: 14px; color: #ddd; display: block; margin-bottom: 10px;">Jumlah Silinder</label>
+            <div class="cyl-grid">
+                <div class="cyl-btn active" onclick="setCyl(1, this)"><strong>1</strong>Silinder (Single)</div>
+                <div class="cyl-btn" onclick="setCyl(2, this)"><strong>2</strong>Silinder (Twin)</div>
+                <div class="cyl-btn" onclick="setCyl(3, this)"><strong>3</strong>Silinder</div>
+                <div class="cyl-btn" onclick="setCyl(4, this)"><strong>4</strong>Silinder (Inline 4)</div>
+            </div>
+        </div>
+
+        <button class="hitung-btn" onclick="updateCalc()">⚡ Hitung Kapasitas Silinder</button>
+
+        <div class="result-card" style="margin-top: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div class="result-label" style="margin:0;">Kapasitas Silinder Mesin</div>
+            </div>
+            <div class="result-value" id="hasilCC">149.79 <span>cc</span></div>
+            
+            <div class="ratio-box" style="margin-top: 25px; flex-direction: column; align-items: flex-start;">
+                <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 10px;">
+                    <div class="ratio-title">⏱ RASIO BORE / STROKE:</div>
+                    <div class="ratio-val" id="hasilRasio">0.971 : 1</div>
+                </div>
+                <div style="font-size: 15px; font-weight: 700; color: #00bcd4; margin-bottom: 5px;" id="statusMesin">Square Engine</div>
+                <div class="engine-desc" id="descMesin">
+                    Diameter Bore dan Langkah Stroke seimbang (mendekati 1:1). Karakter tenaga merata dan linear di seluruh rentang putaran.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= HALAMAN INSPIRASI (Tentang Pembuat) ================= -->
+    <div id="page-inspirasi" style="display: none;">
+        <div class="inspirasi-card" style="text-align: center; border-color: #e53935;">
+            <h2 style="color: #fff; font-size: 20px; margin-bottom: 10px;">👨‍💻 Tentang Pembuat</h2>
+            <p style="font-size: 15px; color: #e53935; font-weight: bold; line-height: 1.8;">
+                1. Naufal Daffa R<br>
+                2. Raihan Tino W<br>
+                3. Fatqan Dhiaul<br>
+                4. Albara Iskandar
+            </p>
+        </div>
+
+        <div class="inspirasi-title" style="font-size: 18px; margin-top: 30px;">
+            💡 TOKOH INSPIRASI KAMI
+        </div>
+
+        <div class="berners-box">
+            <div class="berners-img">👨‍🔬</div>
+            <div class="berners-name">Sir Tim Berners-Lee</div>
+            <div class="berners-sub">(Berness Lee)</div>
+            <div style="font-size: 12px; color: #aaa; margin-top: 5px;">Penemu World Wide Web (WWW)</div>
+        </div>
+
+        <div class="inspirasi-card">
+            <h3 style="color: #fff; font-size: 16px; margin-bottom: 10px;">✨ Mengapa Kami Terinspirasi oleh Beliau?</h3>
+            <div class="inspirasi-text">
+                <strong>Sir Timothy John Berners-Lee</strong> (dikenal juga sebagai <em>Berness Lee</em>) adalah ilmuwan komputer asal Inggris yang menemukan <strong>World Wide Web (WWW)</strong> pada tahun 1989 saat bekerja di CERN. Beliau merancang protokol HTTP, sistem URL, dan bahasa HTML pertama di dunia.
+            </div>
+            <div class="inspirasi-text">
+                Hal yang paling menginspirasi kami adalah keputusan bersejarah beliau untuk <strong>merelakan penemuan teknologi World Wide Web secara terbuka, bebas royalti, dan gratis bagi seluruh umat manusia</strong> tanpa mematenkannya demi kepentingan pribadi atau komersial semata.
+            </div>
+        </div>
+
+        <div class="inspirasi-card">
+            <h3 style="color: #fff; font-size: 16px; margin-bottom: 10px; color: #00bcd4;">🌐 Akses Terbuka untuk Komunitas</h3>
+            <div class="inspirasi-text">
+                Sama seperti visi web terbuka dari Berners-Lee, TuneMaster ID dibangun agar seluruh mekanik pemula, bengkel lokal, dan penghobi otomotif di Indonesia dapat mengakses rumus teknik mesin balap tanpa hambatan biaya lisensi.
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER NAVIGATION -->
+<div class="footer-nav">
+    <div class="active" id="nav-calc" onclick="bukaHalaman('kalkulator')">Kalkulator</div>
+    <div id="nav-inspirasi" onclick="bukaHalaman('inspirasi')">Tentang Kami</div>
+</div>
+
+<script>
+    // ================= LOGIKA KALKULATOR =================
+    let cylinderCount = 1;
+
+    function syncInput(type, val) {
+        val = parseFloat(val);
+        if(type === 'bore') {
+            document.getElementById('boreInput').value = val;
+            document.getElementById('boreRange').value = val;
+        } else {
+            document.getElementById('strokeInput').value = val;
+            document.getElementById('strokeRange').value = val;
+        }
+        updateCalc();
+    }
+
+    function setCyl(num, el) {
+        cylinderCount = num;
+        document.querySelectorAll('.cyl-btn').forEach(btn => btn.classList.remove('active'));
+        el.classList.add('active');
+        updateCalc();
+    }
+
+    function resetSpek() {
+        syncInput('bore', 57);
+        syncInput('stroke', 58.7);
+        setCyl(1, document.querySelectorAll('.cyl-btn')[0]);
+    }
+
+    function updateCalc() {
+        let bore = parseFloat(document.getElementById('boreInput').value) || 0;
+        let stroke = parseFloat(document.getElementById('strokeInput').value) || 0;
+        
+        if(bore > 0 && stroke > 0) {
+            let r = bore / 2;
+            let ccOneCyl = (Math.PI * r * r * stroke) / 1000;
+            let currentCC = ccOneCyl * cylinderCount;
+            
+            document.getElementById('hasilCC').innerHTML = currentCC.toFixed(2) + ' <span>cc</span>';
+            
+            let rasio = bore / stroke;
+            document.getElementById('hasilRasio').innerText = rasio.toFixed(3) + " : 1";
+            
+            let status = "", desc = "", color = "";
+            if (rasio > 1.05) {
+                status = "Oversquare (Tenaga Atas)";
+                desc = "Diameter piston lebih besar dari langkah. Karakter tenaga condong ke putaran atas (high RPM).";
+                color = "#ff9800";
+            } else if (rasio < 0.95) {
+                status = "Undersquare (Tenaga Bawah)";
+                desc = "Langkah piston lebih panjang dari diameter. Karakter tenaga condong ke putaran bawah (low-mid RPM).";
+                color = "#2196F3";
+            } else {
+                status = "Square Engine (Tenaga Merata)";
+                desc = "Diameter Bore dan Langkah Stroke seimbang (mendekati 1:1). Karakter tenaga merata dan linear.";
+                color = "#00bcd4";
+            }
+            
+            let statusEl = document.getElementById('statusMesin');
+            statusEl.innerText = status;
+            statusEl.style.color = color;
+            document.getElementById('descMesin').innerText = desc;
+            document.querySelector('.engine-desc').style.borderLeftColor = color;
+        }
+    }
+
+    // ================= NAVIGASI HALAMAN =================
+    function bukaHalaman(nama) {
+        if(nama === 'kalkulator') {
+            document.getElementById('page-kalkulator').style.display = 'block';
+            document.getElementById('page-inspirasi').style.display = 'none';
+            document.getElementById('nav-calc').classList.add('active');
+            document.getElementById('nav-inspirasi').classList.remove('active');
+            document.getElementById('tab-cc-btn').classList.add('active');
+        } else {
+            document.getElementById('page-kalkulator').style.display = 'none';
+            document.getElementById('page-inspirasi').style.display = 'block';
+            document.getElementById('nav-calc').classList.remove('active');
+            document.getElementById('nav-inspirasi').classList.add('active');
+            document.getElementById('tab-cc-btn').classList.remove('active');
+        }
+    }
+
+    // Inisialisasi awal
+    updateCalc();
+</script>
+
+</body>
+</html>
